@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin | OMOOLA XPERIENCE</title>
+<style>
+:root{--ink:#29251f;--muted:#756d63;--line:#e7ded3;--bg:#f5f5f5;--or:#f68b1e;--wa:#25a244}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Roboto,Arial,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:18px 14px 80px}h1{font-size:1.3rem;margin:0;font-weight:900}h1 small{display:block;font-size:.72rem;color:var(--or);letter-spacing:.1em}
+.card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:16px;margin:14px 0}h2{font-size:1.05rem;margin:0 0 10px}
+label{display:block;font-size:.8rem;font-weight:700;margin:12px 0 4px}input,select,textarea{width:100%;padding:11px;border:1px solid #ccc;background:#fff;font:inherit;border-radius:3px}input[type=checkbox]{width:auto;margin-right:8px}
+button{background:var(--or);color:#fff;border:0;padding:12px 16px;font:700 .9rem Roboto,Arial;cursor:pointer;border-radius:3px;margin-top:12px}button.dark{background:var(--ink)}button.ghost{background:#fff;color:#a33;border:1px solid #d8b4b4;padding:6px 10px;margin:0;font-size:.78rem}button.ghost.e{color:var(--ink);border-color:#bbb}button:disabled{opacity:.5}
+.tabs{display:flex;gap:6px;margin:14px 0 0}.tabs button{margin:0;background:#fff;color:var(--ink);border:1px solid #ccc;flex:1}.tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.drop{border:2px dashed #b9ab99;padding:22px;text-align:center;color:var(--muted);cursor:pointer;border-radius:4px;background:#fffdfa}.drop.on{background:#fdeedb}
+.files{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin-top:10px}.f{position:relative;background:#eee;aspect-ratio:1;overflow:hidden}.f img,.f video{width:100%;height:100%;object-fit:cover}.f i{position:absolute;left:0;bottom:0;height:5px;background:var(--wa);width:0}.f b{position:absolute;top:3px;right:3px;background:#000a;color:#fff;padding:0 7px;border-radius:9px;font-size:.75rem;cursor:pointer}
+.vrow{display:grid;grid-template-columns:1.4fr 1fr auto;gap:8px;margin-bottom:8px}.vrow button{margin:0;padding:0 12px;background:#eee;color:#a33}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.chk{display:flex;align-items:center;margin-top:14px;font-weight:700;font-size:.9rem}
+.msg{margin-top:10px;font-size:.88rem}.err{color:#a33}.ok{color:#2e7d32}small.h{color:var(--muted);font-weight:400}
+.job{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.job img{width:60px;height:60px;object-fit:cover;background:#eee}.job div.t{flex:1;min-width:0}.job small{color:var(--muted)}.job .acts{display:flex;gap:6px}
+.top{display:flex;justify-content:space-between;align-items:end}.top button{background:none;color:var(--muted);padding:0;margin:0;text-decoration:underline;font-weight:400;font-size:.8rem}
+.hide{display:none}
+</style></head><body><div class="wrap">
+<div class="top"><h1>OMOOLA XPERIENCE<small>ADMIN</small></h1><button id="out" class="hide">Log out</button></div>
+
+<div id="login" class="card"><h2>Log in</h2><label for="pw">Admin password</label><input id="pw" type="password" autocomplete="current-password"><button id="loginBtn">Log in</button><div id="loginMsg" class="msg err"></div></div>
+
+<div id="app" class="hide">
+<div class="tabs"><button id="tp" class="on">Products</button><button id="tj">Completed jobs</button></div>
+
+<section id="sp">
+ <div class="card"><h2 id="pform-title">Add a product</h2>
+  <label for="pname">Product name</label><input id="pname" maxlength="120" placeholder="e.g. Pinterest Frame (Floral)">
+  <div class="two"><div><label for="pcat">Category</label><select id="pcat"><option>Pinterest Frames</option><option>Wall Collages</option><option>Regular Photo Frames</option></select></div>
+  <div><label for="pbadge">Tag <small class="h">(optional)</small></label><input id="pbadge" maxlength="20" placeholder="New, Best seller"></div></div>
+  <label>Sizes and prices <small class="h">(leave price empty for "Ask for price")</small></label>
+  <div id="vars"></div><button type="button" class="dark" id="addVar" style="margin-top:0">+ Add another size</button>
+  <label for="pdesc">Description</label><textarea id="pdesc" rows="4" maxlength="1500" placeholder="What is it, who is it for, what is included..."></textarea>
+  <label class="chk"><input type="checkbox" id="pstock" checked> In stock</label>
+  <label>Photos and video <small class="h">(first one is the main picture, up to 8)</small></label>
+  <div class="drop" id="pdrop">Tap to choose, or drop files here</div><input id="pfile" type="file" accept="image/*,video/*" multiple class="hide"><div class="files" id="pfiles"></div>
+  <button id="psave">Save product</button> <button id="pcancel" class="dark hide">Cancel edit</button><div id="pmsg" class="msg"></div></div>
+ <div class="card"><h2>Your products</h2><div id="plist">Loading…</div></div>
+</section>
+
+<section id="sj" class="hide">
+ <div class="card"><h2>Add a completed job</h2>
+  <label for="title">Title</label><input id="title" maxlength="120" placeholder="e.g. 12 × 16 Pinterest frame for Tolu">
+  <label for="cat">Category</label><select id="cat"><option>Pinterest Frames</option><option>Wall Collages</option><option>Regular Photo Frames</option></select>
+  <label for="cap">Short note (optional)</label><textarea id="cap" rows="2" maxlength="500"></textarea>
+  <label>Photos and videos</label>
+  <div class="drop" id="drop">Tap to choose, or drop files here<br><small>Up to 20 files</small></div><input id="file" type="file" accept="image/*,video/*" multiple class="hide"><div class="files" id="files"></div>
+  <button id="save">Upload and publish</button><div id="saveMsg" class="msg"></div></div>
+ <div class="card"><h2>Published jobs</h2><div id="list">Loading…</div></div>
+</section>
+</div></div>
+<script src="/defaults.js"></script>
+<script>
+const $=id=>document.getElementById(id);let cfg={},token="";
+try{token=localStorage.getItem("ox_token")||""}catch(e){}
+const api=(p,o={})=>fetch("/api/"+p,{...o,headers:{"content-type":"application/json",...(token?{authorization:"Bearer "+token}:{})}});
+const thumb=i=>i.type==="video"?i.url.replace("/upload/","/upload/so_0,f_jpg,w_200,h_200,c_fill/").replace(/\.[a-z0-9]+$/i,".jpg"):i.url.replace("/upload/","/upload/f_auto,q_auto,w_200,h_200,c_fill/");
+const naira=n=>"₦"+Number(n).toLocaleString("en-NG");
+const mk=(t,src)=>{const e=document.createElement(t);e.src=src;if(t==="video")e.muted=true;return e};
+const msg=(el,t,c)=>{el.className="msg "+(c||"");el.textContent=t};
+function show(on){$("login").classList.toggle("hide",on);$("app").classList.toggle("hide",!on);$("out").classList.toggle("hide",!on);if(on)boot()}
+async function boot(){
+ try{
+  const cr=await api("config");if(!cr.ok)throw new Error("Could not load admin settings. Refresh the page and try again.");
+  cfg=await cr.json();
+  if(token){
+   const sr=await api("session");
+   if(!sr.ok){token="";try{localStorage.removeItem("ox_token")}catch(e){}show(false);return}
+  }
+  await Promise.all([loadProducts(),loadJobs()]);
+ }catch(e){
+  if(token){token="";try{localStorage.removeItem("ox_token")}catch(_){}show(false)}
+  else msg($("loginMsg"),e.message||"Could not connect to the admin service. Please refresh and try again.","err");
+ }
+}
+$("loginBtn").onclick=async()=>{
+ const button=$("loginBtn");button.disabled=true;msg($("loginMsg"),"Signing in…");
+ try{
+  const r=await api("login",{method:"POST",body:JSON.stringify({password:$("pw").value})});
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok){msg($("loginMsg"),d.error||"Could not log in","err");return}
+  token=d.token;try{localStorage.setItem("ox_token",token)}catch(e){}show(true);
+ }catch(e){msg($("loginMsg"),"Could not connect. Check your internet connection and try again.","err")}
+ finally{button.disabled=false}
+};
+$("pw").onkeydown=e=>{if(e.key==="Enter")$("loginBtn").click()};
+$("out").onclick=()=>{token="";try{localStorage.removeItem("ox_token")}catch(e){}show(false)};
+$("tp").onclick=()=>tab(true);$("tj").onclick=()=>tab(false);
+function tab(p){$("sp").classList.toggle("hide",!p);$("sj").classList.toggle("hide",p);$("tp").classList.toggle("on",p);$("tj").classList.toggle("on",!p)}
+
+/* file picker with previews, existing files (keep) and progress */
+function picker(dropId,fileId,boxId,max){
+ const drop=$(dropId),inp=$(fileId),box=$(boxId),p={list:[],keep:[]};
+ const tile=(media,rm)=>{const d=document.createElement("div");d.className="f";const x=document.createElement("b");x.textContent="✕";x.onclick=rm;const bar=document.createElement("i");d.append(media,x,bar);return d};
+ p.draw=()=>{box.innerHTML="";
+  p.keep.forEach((it,i)=>box.append(tile(mk("img",thumb(it)),()=>{p.keep.splice(i,1);p.draw()})));
+  p.list.forEach((q,i)=>{const t=tile(mk(q.f.type.startsWith("video")?"video":"img",URL.createObjectURL(q.f)),()=>{p.list.splice(i,1);p.draw()});q.bar=t.querySelector("i");box.append(t)})};
+ p.clear=()=>{p.list=[];p.keep=[];p.draw()};
+ const add=fl=>{[...fl].filter(f=>/^(image|video)\//.test(f.type)).forEach(f=>{if(p.list.length+p.keep.length<max)p.list.push({f})});p.draw()};
+ drop.onclick=()=>inp.click();
+ ["dragover","dragenter"].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add("on")}));
+ ["dragleave","drop"].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.remove("on")}));
+ drop.addEventListener("drop",e=>add(e.dataTransfer.files));inp.onchange=e=>{add(e.target.files);e.target.value=""};
+ p.upload=async()=>{const items=[...p.keep];for(const q of p.list)items.push(await up(q));return items};
+ return p}
+function up(q){return new Promise((res,rej)=>{if(!cfg.cloudName||!cfg.uploadPreset)return rej(new Error("Cloudinary is not set up yet. See README."));
+ const fd=new FormData();fd.append("file",q.f);fd.append("upload_preset",cfg.uploadPreset);fd.append("folder","omoola-xperience");
+ const x=new XMLHttpRequest();x.open("POST",`https://api.cloudinary.com/v1_1/${cfg.cloudName}/auto/upload`);
+ x.upload.onprogress=e=>{if(e.lengthComputable&&q.bar)q.bar.style.width=(e.loaded/e.total*100)+"%"};
+ x.onload=()=>{try{const d=JSON.parse(x.responseText);x.status<300?res({type:d.resource_type==="video"?"video":"image",url:d.secure_url}):rej(new Error(d.error?.message||"Upload failed"))}catch(e){rej(e)}};
+ x.onerror=()=>rej(new Error("Network problem, check your data and try again"));x.send(fd)})}
+const pp=picker("pdrop","pfile","pfiles",8),jp=picker("drop","file","files",20);
+
+/* products */
+let editing=null,allProducts=[];
+function varRow(v={}){const r=document.createElement("div");r.className="vrow";
+ const s=document.createElement("input");s.placeholder="Size e.g. 12 × 16 inches";s.maxLength=40;s.value=v.size||"";
+ const p=document.createElement("input");p.type="number";p.inputMode="numeric";p.min=0;p.placeholder="Price ₦";p.value=v.price??"";
+ const x=document.createElement("button");x.type="button";x.textContent="✕";x.onclick=()=>{if($("vars").children.length>1)r.remove()};
+ r.append(s,p,x);$("vars").append(r)}
+$("addVar").onclick=()=>varRow();
+function resetForm(){editing=null;["pname","pbadge","pdesc"].forEach(i=>$(i).value="");$("pstock").checked=true;$("vars").innerHTML="";varRow();pp.clear();
+ $("pform-title").textContent="Add a product";$("psave").textContent="Save product";$("pcancel").classList.add("hide")}
+$("pcancel").onclick=resetForm;
+$("psave").onclick=async()=>{const m=$("pmsg");msg(m,"");
+ if(!$("pname").value.trim())return msg(m,"Please add a product name.","err");
+ const variants=[...$("vars").children].map(r=>{const[i,j]=r.querySelectorAll("input");return{size:i.value.trim(),price:j.value===""?null:Number(j.value)}}).filter(v=>v.size||v.price!==null);
+ if(!variants.length)return msg(m,"Add at least one size or price.","err");
+ $("psave").disabled=true;msg(m,pp.list.length?"Uploading… keep this page open.":"Saving…");
+ try{const items=await pp.upload();
+  const r=await api("products",{method:"POST",body:JSON.stringify({id:editing,name:$("pname").value,category:$("pcat").value,badge:$("pbadge").value,description:$("pdesc").value,inStock:$("pstock").checked,variants,items})});
+  if(r.status===401){show(false);throw new Error("Session ended, please log in and try again")}if(!r.ok)throw new Error((await r.json()).error||"Could not save");
+  resetForm();msg(m,"Saved! It is now on the website.","ok");loadProducts()}
+ catch(e){msg(m,e.message,"err")}finally{$("psave").disabled=false}};
+function edit(p){editing=p.id;$("pname").value=p.name;$("pcat").value=p.category;$("pbadge").value=p.badge||"";$("pdesc").value=p.description||"";$("pstock").checked=p.inStock!==false;
+ $("vars").innerHTML="";p.variants.forEach(varRow);pp.list=[];pp.keep=[...p.items];pp.draw();
+ $("pform-title").textContent="Edit product";$("psave").textContent="Save changes";$("pcancel").classList.remove("hide");scrollTo({top:0,behavior:"smooth"})}
+async function loadProducts(){const l=$("plist");l.textContent="Loading products…";
+ const r=await api("products");if(!r.ok)throw new Error("Could not load products. Please refresh the page.");
+ allProducts=await r.json();if(!Array.isArray(allProducts))throw new Error("The products response was not valid.");l.innerHTML="";
+ if(!allProducts.length){l.textContent="No products added yet. The website is showing the default 3 products. ";const b=document.createElement("button");b.className="dark";b.textContent="Load them here so I can edit them";
+  b.onclick=async()=>{b.disabled=true;try{for(const d of window.OX_DEFAULTS){const{id,...rest}=d;const r=await api("products",{method:"POST",body:JSON.stringify(rest)});if(!r.ok)throw new Error((await r.json().catch(()=>({}))).error||"Could not import the default products.")}await loadProducts()}catch(e){alert(e.message||"Could not import the default products.");b.disabled=false}};l.append(document.createElement("br"),b);return}
+ allProducts.forEach(p=>{const d=document.createElement("div");d.className="job";const im=document.createElement("img");im.src=p.items[0]?thumb(p.items[0]):"data:image/gif;base64,R0lGODlhAQABAAAAACw=";
+  const t=document.createElement("div");t.className="t";const b=document.createElement("b");b.textContent=p.name;const pr=p.variants.filter(v=>v.price!==null).map(v=>v.price);
+  const s=document.createElement("small");s.textContent=`${p.category} · ${p.variants.length} size${p.variants.length>1?"s":""} · ${pr.length?(pr.length>1?"from ":"")+naira(Math.min(...pr)):"ask for price"}${p.inStock?"":" · SOLD OUT"}`;
+  t.append(b,document.createElement("br"),s);const a=document.createElement("div");a.className="acts";
+  const e=document.createElement("button");e.className="ghost e";e.textContent="Edit";e.onclick=()=>edit(p);
+  const x=document.createElement("button");x.className="ghost";x.textContent="Remove";x.onclick=async()=>{if(!confirm("Remove this product from the website?"))return;const r=await api("products?id="+encodeURIComponent(p.id),{method:"DELETE"});if(r.status===401)return show(false);if(!r.ok){alert("Could not remove this product. Please try again.");return}loadProducts()};
+  a.append(e,x);d.append(im,t,a);l.append(d)})}
+
+/* completed jobs */
+async function loadJobs(){const l=$("list");l.textContent="Loading completed jobs…";
+ const r=await api("works");if(!r.ok)throw new Error("Could not load completed jobs. Please refresh the page.");
+ const w=await r.json();if(!Array.isArray(w))throw new Error("The completed jobs response was not valid.");
+ if(!w.length){l.textContent="Nothing yet. Add your first completed job above.";return}l.innerHTML="";
+ w.forEach(x=>{const d=document.createElement("div");d.className="job";const im=document.createElement("img");im.src=thumb(x.items[0]);const t=document.createElement("div");t.className="t";
+  const b=document.createElement("b");b.textContent=x.title;const s=document.createElement("small");s.textContent=`${x.category} · ${x.items.length} file${x.items.length>1?"s":""}`;t.append(b,document.createElement("br"),s);
+  const del=document.createElement("button");del.className="ghost";del.textContent="Remove";del.onclick=async()=>{if(!confirm("Remove this job from the website?"))return;const r=await api("works?id="+encodeURIComponent(x.id),{method:"DELETE"});if(r.status===401)return show(false);if(!r.ok){alert("Could not remove this job. Please try again.");return}loadJobs()};
+  d.append(im,t,del);l.append(d)})}
+$("save").onclick=async()=>{const m=$("saveMsg");msg(m,"");
+ if(!$("title").value.trim())return msg(m,"Please add a title.","err");
+ if(!jp.list.length)return msg(m,"Please choose at least one photo or video.","err");
+ $("save").disabled=true;msg(m,"Uploading… keep this page open.");
+ try{const items=await jp.upload();
+  const r=await api("works",{method:"POST",body:JSON.stringify({title:$("title").value,category:$("cat").value,caption:$("cap").value,items})});
+  if(r.status===401){show(false);throw new Error("Session ended, please log in and try again")}if(!r.ok)throw new Error((await r.json()).error||"Could not save");
+  jp.clear();$("title").value="";$("cap").value="";msg(m,"Done! It is now on the website.","ok");loadJobs()}
+ catch(e){msg(m,e.message,"err")}finally{$("save").disabled=false}};
+resetForm();show(!!token);
+</script></body></html>

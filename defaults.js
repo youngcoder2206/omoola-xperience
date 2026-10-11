@@ -1,0 +1,5 @@
+window.OX_DEFAULTS=[
+{id:'d1',name:'Pinterest Frames',category:'Pinterest Frames',description:'Pinterest-inspired photo displays with a creative, aesthetic feel. A lovely option for bedrooms and personal spaces.',badge:'',inStock:true,variants:[{size:'8 × 12 inches',price:5000},{size:'12 × 16 inches',price:7000}],items:[]},
+{id:'d2',name:'Wall Collages',category:'Wall Collages',description:'Bring several favourite pictures together in a coordinated wall display. Contact us for pricing and arrangements.',badge:'',inStock:true,variants:[{size:'Custom arrangement',price:null}],items:[]},
+{id:'d3',name:'Regular Photo Frames',category:'Regular Photo Frames',description:'A timeless way to display portraits, special occasions and other meaningful pictures. Choose the size that works best.',badge:'',inStock:true,variants:[{size:'8 × 10 inches',price:8500},{size:'10 × 12 inches',price:11000},{size:'12 × 16 inches',price:14000},{size:'16 × 20 inches',price:18000},{size:'20 × 24 inches',price:25000}],items:[]}
+];
